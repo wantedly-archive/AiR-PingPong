@@ -3,6 +3,9 @@
 #include "ofMain.h"
 #include "ofxQuadWarp.h"
 
+#define IMAGE_WIDTH 500
+#define IMAGE_HEIGHT 300
+
 class ofApp : public ofBaseApp {
     
 public:
@@ -24,8 +27,7 @@ public:
 
     ofxQuadWarp warper;
     
-    ofImage img;
-    ofFbo fbo;
+    ofRectangle table;
 
     ofPoint points[10];
 };
