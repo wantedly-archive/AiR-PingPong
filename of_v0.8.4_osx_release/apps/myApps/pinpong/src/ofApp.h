@@ -37,8 +37,9 @@ public:
 
     ofVideoGrabber vidGrabber;
     ofxCvColorImage cameraImg;
-    ofxQuadWarp cameraWrapper;
-    
+    ofFbo cameraFbo;
+    bool showCamera;
+
 private:
     int t;
 };
