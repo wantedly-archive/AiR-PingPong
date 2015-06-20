@@ -6,7 +6,14 @@ void ofApp::setup() {
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     ofEnableSmoothing();
-    
+
+    // Set up camera
+    vidGrabber.setVerbose(true);
+    vidGrabber.initGrabber(320, 240);
+
+    cameraImg.allocate(320, 240);
+    cameraWrapper.setSourceRect(ofRectangle(0, 0, 320, 240));
+    cameraWrapper.setup();
     
     int x = (ofGetWidth() - IMAGE_WIDTH) * 0.5;       // center on screen.
     int y = (ofGetHeight() - IMAGE_HEIGHT) * 0.5;     // center on screen.
@@ -41,6 +48,11 @@ void ofApp::update()
     }
     
     ball.move(t);
+
+    vidGrabber.update();
+    if (vidGrabber.isFrameNew()) {
+        cameraImg.setFromPixels(vidGrabber.getPixels(), 320, 240);
+    }
     
 }
 
@@ -60,7 +72,15 @@ void ofApp::draw() {
     ofFill();
     ofRect(table);
     glPopMatrix();
-    
+
+
+    //========================
+
+    ofMatrix4x4 cameraMat = cameraWrapper.getMatrix();
+    glPushMatrix();
+    glMultMatrixf(cameraMat.getPtr());
+    cameraImg.draw(0, 0);
+    glPopMatrix();
     
     //======================== use the matrix to transform points.
 

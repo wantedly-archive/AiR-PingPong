@@ -34,6 +34,10 @@ public:
     Ball ball = Ball(ofPoint(0, 0, 0));
 
     ofPoint points[10];
+
+    ofVideoGrabber vidGrabber;
+    ofxCvColorImage cameraImg;
+    ofxQuadWarp cameraWrapper;
     
 private:
     int t;
