@@ -6,14 +6,20 @@ void ofApp::setup() {
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     ofEnableSmoothing();
-    
-    img.loadImage("quad_warp_kittens.png");
+
+    // Load camera
+    vidGrabber.setVerbose(true);
+    vidGrabber.initGrabber(320,240);
+
+    img.allocate(320,240);
+
+    // img.loadImage("quad_warp_kittens.png");
 
     int x = (ofGetWidth() - img.width) * 0.5;       // center on screen.
     int y = (ofGetHeight() - img.height) * 0.5;     // center on screen.
     int w = img.width;
     int h = img.height;
-    
+
     fbo.allocate(w, h);
     
     warper.setSourceRect(ofRectangle(0, 0, w, h));              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
@@ -28,15 +34,11 @@ void ofApp::setup() {
 //--------------------------------------------------------------
 void ofApp::update()
 {
-    if(ofGetFrameNum() % 5 != 0) {
-        // only update every 5 frames.
-        return;
-    }
-    
-    for(int i=0; i<10; i++) {
-        // randomise points over the image area.
-        points[i].x = ofRandom(img.width);
-        points[i].y = ofRandom(img.height);
+
+    //カメラから新規フレーム取り込み
+    vidGrabber.update();
+    if (vidGrabber.isFrameNew()) {
+        img.setFromPixels(vidGrabber.getPixels(), 320, 240);
     }
 }
 
