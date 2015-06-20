@@ -7,14 +7,14 @@ void ofApp::setup() {
     ofSetVerticalSync(true);
     ofEnableSmoothing();
     
-    img.loadImage("quad_warp_kittens.png");
-
-    int x = (ofGetWidth() - img.width) * 0.5;       // center on screen.
-    int y = (ofGetHeight() - img.height) * 0.5;     // center on screen.
-    int w = img.width;
-    int h = img.height;
     
-    fbo.allocate(w, h);
+    int x = (ofGetWidth() - IMAGE_WIDTH) * 0.5;       // center on screen.
+    int y = (ofGetHeight() - IMAGE_HEIGHT) * 0.5;     // center on screen.
+    int w = IMAGE_WIDTH;
+    int h = IMAGE_HEIGHT;
+    
+    table = ofRectangle(0, 0, w, h);
+    ball = Ball(ofPoint(0, 0, 0));
     
     warper.setSourceRect(ofRectangle(0, 0, w, h));              // this is the source rectangle which is the size of the image and located at ( 0, 0 )
     warper.setTopLeftCornerPosition(ofPoint(x, y));             // this is position of the quad warp corners, centering the image on the screen.
@@ -32,23 +32,22 @@ void ofApp::update()
         // only update every 5 frames.
         return;
     }
+    ++t;
     
     for(int i=0; i<10; i++) {
         // randomise points over the image area.
-        points[i].x = ofRandom(img.width);
-        points[i].y = ofRandom(img.height);
+        points[i].x = ofRandom(table.width);
+        points[i].y = ofRandom(table.height);
     }
+    
+    ball.move(t);
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
     ofSetColor(255);
     
-    //======================== draw image into fbo.
-    
-    fbo.begin();
-    img.draw(0, 0);
-    fbo.end();
     
     //======================== get our quad warp matrix.
     
@@ -58,8 +57,10 @@ void ofApp::draw() {
     
     glPushMatrix();
     glMultMatrixf(mat.getPtr());
-    fbo.draw(0, 0);
+    ofFill();
+    ofRect(table);
     glPopMatrix();
+    
     
     //======================== use the matrix to transform points.
 
@@ -74,6 +75,9 @@ void ofApp::draw() {
         
         ofLine(p1.x, p1.y, p2.x, p2.y);
     }
+    
+    ball.draw(mat);
+    
     
     //======================== draw quad warp ui.
     
