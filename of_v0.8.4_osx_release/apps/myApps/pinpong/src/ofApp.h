@@ -23,9 +23,13 @@ public:
     void gotMessage(ofMessage msg);
 
     ofxQuadWarp warper;
-    
-    ofImage img;
+
+    // ofImage img;
     ofFbo fbo;
 
     ofPoint points[10];
+
+    ofVideoGrabber vidGrabber;
+    ofxCvColorImage img;
+    // ofxCvGrayscaleImage grayImage;
 };
