@@ -56,10 +56,10 @@ void ofApp::draw() {
     
     //======================== use the matrix to transform our fbo.
     
-    ofPushMatrix();
-    ofMultMatrix(mat);
+    glPushMatrix();
+    glMultMatrixf(mat.getPtr());
     fbo.draw(0, 0);
-    ofPopMatrix();
+    glPopMatrix();
     
     //======================== use the matrix to transform points.
 
@@ -72,7 +72,7 @@ void ofApp::draw() {
         ofVec3f p1 = mat.preMult(ofVec3f(points[i].x, points[i].y, 0));
         ofVec3f p2 = mat.preMult(ofVec3f(points[j].x, points[j].y, 0));
         
-        ofDrawLine(p1.x, p1.y, p2.x, p2.y);
+        ofLine(p1.x, p1.y, p2.x, p2.y);
     }
     
     //======================== draw quad warp ui.

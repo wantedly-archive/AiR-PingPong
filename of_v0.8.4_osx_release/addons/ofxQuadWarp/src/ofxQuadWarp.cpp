@@ -97,14 +97,14 @@ void ofxQuadWarp::disableKeyboardShortcuts() {
 }
 
 //----------------------------------------------------- source / target points.
-void ofxQuadWarp::setSourceRect(const ofRectangle& r) {
+void ofxQuadWarp::setSourceRect(ofRectangle r) {
 	srcPoints[0].set(r.x, r.y);
 	srcPoints[1].set(r.x + r.width, r.y);
 	srcPoints[2].set(r.x + r.width, r.y + r.height);
 	srcPoints[3].set(r.x, r.y + r.height);
 }
 
-void ofxQuadWarp::setSourcePoints(const vector<ofPoint>& points) {
+void ofxQuadWarp::setSourcePoints(vector<ofPoint> points) {
     int t = MIN(4, points.size());
     for(int i=0; i<t; i++) {
         srcPoints[i].set(points[i]);
@@ -115,14 +115,14 @@ ofPoint* ofxQuadWarp::getSourcePoints() {
     return &srcPoints[0];
 }
 
-void ofxQuadWarp::setTargetRect(const ofRectangle& r) {
+void ofxQuadWarp::setTargetRect(ofRectangle r) {
 	dstPoints[0].set(r.x, r.y);
 	dstPoints[1].set(r.x + r.width, r.y);
 	dstPoints[2].set(r.x + r.width, r.y + r.height);
 	dstPoints[3].set(r.x, r.y + r.height);
 }
 
-void ofxQuadWarp::setTargetPoints(const vector<ofPoint>& points) {
+void ofxQuadWarp::setTargetPoints(vector<ofPoint> points) {
     int t = MIN(4, points.size());
     for(int i=0; i<t; i++) {
         dstPoints[i].set(points[i]);
@@ -134,15 +134,15 @@ ofPoint* ofxQuadWarp::getTargetPoints() {
 }
 
 //----------------------------------------------------- matrix.
-ofMatrix4x4 ofxQuadWarp::getMatrix() const {
+ofMatrix4x4 ofxQuadWarp::getMatrix() {
     return getMatrix(&srcPoints[0], &dstPoints[0]);
 }
 
-ofMatrix4x4 ofxQuadWarp::getMatrixInverse() const {
+ofMatrix4x4 ofxQuadWarp::getMatrixInverse() {
     return getMatrix(&dstPoints[0], &srcPoints[0]);
 }
 
-ofMatrix4x4 ofxQuadWarp::getMatrix(const ofPoint* srcPoints, const ofPoint* dstPoints) const {
+ofMatrix4x4 ofxQuadWarp::getMatrix(ofPoint * srcPoints, ofPoint * dstPoints) {
     
 	//we need our points as opencv points
 	//be nice to do this without opencv?
@@ -356,33 +356,32 @@ void ofxQuadWarp::keyPressed(ofKeyEventArgs& keyArgs) {
 }
 
 //----------------------------------------------------- corners.
-void ofxQuadWarp::setCorners(const vector<ofPoint>& corners) {
-    vector<ofPoint> _corners = corners;
-    _corners.resize(4);
-    setTopLeftCornerPosition(_corners[0]);
-    setTopRightCornerPosition(_corners[1]);
-    setBottomRightCornerPosition(_corners[2]);
-    setBottomLeftCornerPosition(_corners[3]);
+void ofxQuadWarp::setCorners(vector<ofPoint> corners) {
+    corners.resize(4);
+    setTopLeftCornerPosition(corners[0]);
+    setTopRightCornerPosition(corners[1]);
+    setBottomRightCornerPosition(corners[2]);
+    setBottomLeftCornerPosition(corners[3]);
 }
 
-void ofxQuadWarp::setCorner(const ofPoint& p, int cornerIndex) {
+void ofxQuadWarp::setCorner(ofPoint p, int cornerIndex) {
     cornerIndex = ofClamp(cornerIndex, 0, 3);
     dstPoints[cornerIndex].set(p);
 }
 
-void ofxQuadWarp::setTopLeftCornerPosition(const ofPoint& p) {
+void ofxQuadWarp::setTopLeftCornerPosition(ofPoint p) {
     setCorner(p, 0);
 }
 
-void ofxQuadWarp::setTopRightCornerPosition(const ofPoint& p) {
+void ofxQuadWarp::setTopRightCornerPosition(ofPoint p) {
     setCorner(p, 1);
 }
 
-void ofxQuadWarp::setBottomRightCornerPosition(const ofPoint& p) {
+void ofxQuadWarp::setBottomRightCornerPosition(ofPoint p) {
     setCorner(p, 2);
 }
 
-void ofxQuadWarp::setBottomLeftCornerPosition(const ofPoint& p) {
+void ofxQuadWarp::setBottomLeftCornerPosition(ofPoint p) {
     setCorner(p, 3);
 }
 
@@ -410,7 +409,7 @@ bool ofxQuadWarp::isShowing() {
 }
 
 //----------------------------------------------------- save / load.
-void ofxQuadWarp::save(const string& path) {
+void ofxQuadWarp::save(string path) {
     ofXml xml;
     xml.addChild("quadwarp");
     xml.setTo("quadwarp");
@@ -439,7 +438,7 @@ void ofxQuadWarp::save(const string& path) {
     xml.save(path);
 }
 
-void ofxQuadWarp::load(const string& path) {
+void ofxQuadWarp::load(string path) {
     ofXml xml;
     bool bOk = xml.load(path);
     if(bOk == false) {
@@ -504,10 +503,10 @@ void ofxQuadWarp::drawQuadOutline() {
     
     for(int i=0; i<4; i++) {
         int j = (i+1) % 4;
-        ofDrawLine(dstPoints[i].x + position.x,
-                   dstPoints[i].y + position.y,
-                   dstPoints[j].x + position.x,
-                   dstPoints[j].y + position.y);
+        ofLine(dstPoints[i].x + position.x,
+               dstPoints[i].y + position.y,
+               dstPoints[j].x + position.x,
+               dstPoints[j].y + position.y);
     }
 }
 
@@ -547,7 +546,7 @@ void ofxQuadWarp::drawSelectedCorner() {
 }
 
 void ofxQuadWarp::drawCornerAt(const ofPoint & point) {
-    ofDrawRectangle(point.x + position.x - anchorSizeHalf,
-                    point.y + position.y - anchorSizeHalf,
-                    anchorSize, anchorSize);
+    ofRect(point.x + position.x - anchorSizeHalf,
+           point.y + position.y - anchorSizeHalf,
+           anchorSize, anchorSize);
 }
