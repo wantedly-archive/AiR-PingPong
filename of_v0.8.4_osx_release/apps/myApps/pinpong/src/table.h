@@ -13,13 +13,13 @@
 
 #include "ball.h"
 
-
 class Table {
 private:
     Ball ball;
 public:
     const int TABLE_WIDTH = 274;  // 2.74m
     const int TABLE_HEIGHT = 152;  // 1.525m
+    const bool AIR_HOCKEY_MODE = true;
 
     Table();
     void init();

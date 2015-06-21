@@ -11,7 +11,7 @@
 #include "ofColor.h"
 #include "ofApp.h"
 
-Table::Table(): ball(Ball(ofPoint(0, 0, 0))) {
+Table::Table(): ball(*this) {
 
 }
 

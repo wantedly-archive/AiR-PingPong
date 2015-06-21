@@ -12,7 +12,11 @@
 #include "ofPoint.h"
 #include "ofVec3f.h"
 
+class Table;
+
 class Ball {
+private:
+    const Table& table;
 public:
     ofVec3f velocity;
     ofVec3f acceleration;
@@ -20,7 +24,7 @@ public:
 
     const int BALL_R = 2; // 40m or 4.4m
 
-    Ball(ofPoint position);
+    Ball(const Table& table);
     void draw();
     void move(int t);
 };

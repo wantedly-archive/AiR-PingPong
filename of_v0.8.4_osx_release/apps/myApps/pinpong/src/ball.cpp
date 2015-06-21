@@ -9,10 +9,10 @@
 #include "ball.h"
 #include "ofApp.h"
 
-
-Ball::Ball(ofPoint position):
+Ball::Ball(const Table& table):
+    table(table),
     position(position),
-    velocity(ofVec3f(5, 1, 0)) {
+    velocity(ofVec3f(10, 1, 0)) {
 }
 
 void Ball::draw() {
@@ -25,4 +25,14 @@ void Ball::draw() {
 void Ball::move(int t) {
     position.x += t * velocity.x;
     position.y += t * velocity.y;
+
+    if (table.AIR_HOCKEY_MODE) {
+        if (position.y > table.TABLE_HEIGHT && velocity.y > 0) {
+            velocity.y *= -1;
+        }
+
+        if (position.y < 0 && velocity.y < 0) {
+            velocity.y *= -1;
+        }
+    }
 }
