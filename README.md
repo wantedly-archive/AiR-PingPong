@@ -5,7 +5,7 @@ Wantedlyの卓球台をARでハックするプロジェクト
 ## Getting Started
 
 1. このリポジトリをクローンする
-2. `open of_v0.8.4_osx_release/apps/myApps/pingpong/pingpong.xcodeproj`でXcodeのプロジェクトを開く
+2. `open of_v0.8.4_osx_release/apps/myApps/pinpong/pinpong.xcodeproj`でXcodeのプロジェクトを開く
 3. スタートボタンを押してビルドできることを祈る
 
 簡単のため、リポジトリ内に[Open Frameworks](http://openframeworks.jp/)は全てすでに取り込んであるのでダウンロードしなくて大丈夫です。
