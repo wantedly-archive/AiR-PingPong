@@ -12,7 +12,7 @@ void ofApp::setup() {
     vidGrabber.initGrabber(320, 240);
 
     cameraImg.allocate(320, 240);
-    showCamera = true;
+    showCamera = false;
 
     int x = (ofGetWidth() - table.TABLE_WIDTH) * 0.5;       // center on screen.
     int y = (ofGetHeight() - table.TABLE_HEIGHT) * 0.5;     // center on screen.
