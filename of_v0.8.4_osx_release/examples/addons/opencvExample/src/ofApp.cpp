@@ -5,6 +5,8 @@ void ofApp::setup(){
 
 	#ifdef _USE_LIVE_VIDEO
         vidGrabber.setVerbose(true);
+        vector<ofVideoDevice> devices = vidGrabber.listDevices();
+        vidGrabber.setDeviceID(devices[devices.size()-1].id);
         vidGrabber.initGrabber(320,240);
 	#else
         vidPlayer.loadMovie("fingers.mov");
