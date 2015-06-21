@@ -8,24 +8,21 @@
 
 #include "table.h"
 
+#include "ofColor.h"
+#include "ofApp.h"
+
 Table::Table(): ball(Ball(ofPoint(0, 0, 0))) {
 
 }
 
-void Table::draw(const ofMatrix4x4& mat) {
-    glPushMatrix();
-    glMultMatrixf(mat.getPtr());
-
+void Table::draw() {
     // draw self
     ofSetColor(ofColor::white);
     ofFill();
     ofRect(0, 0, TABLE_WIDTH, TABLE_HEIGHT);
 
-
     // draw objects
     ball.draw();
-    
-    glPopMatrix();
 }
 
 void Table::update() {

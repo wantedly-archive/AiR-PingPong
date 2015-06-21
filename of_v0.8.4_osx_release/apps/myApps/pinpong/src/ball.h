@@ -9,7 +9,8 @@
 #ifndef pinpong_ball_h
 #define pinpong_ball_h
 
-#include "ofxQuadWarp.h"
+#include "ofPoint.h"
+#include "ofVec3f.h"
 
 class Ball {
 private:
@@ -20,7 +21,6 @@ private:
 public:
     Ball(ofPoint position);
     void draw();
-    void draw(const ofMatrix4x4& mat);
     void move(int t);
 };
 

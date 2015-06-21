@@ -53,7 +53,13 @@ void ofApp::draw() {
     //======================== get our quad warp matrix.
     
     ofMatrix4x4 mat = warper.getMatrix();
-    table.draw(mat);
+
+    glPushMatrix();
+    glMultMatrixf(mat.getPtr());
+
+    table.draw();
+
+    glPopMatrix();
 
     //========================
     if (showCamera) {

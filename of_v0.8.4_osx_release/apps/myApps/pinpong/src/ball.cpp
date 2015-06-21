@@ -7,7 +7,7 @@
 //
 
 #include "ball.h"
-#include "ofMain.h"
+#include "ofApp.h"
 
 
 Ball::Ball(ofPoint position): position(position) {

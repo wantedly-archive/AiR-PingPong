@@ -23,7 +23,7 @@ public:
 
     Table();
     void update();
-    void draw(const ofMatrix4x4& mat);
+    void draw();
 };
 
 
