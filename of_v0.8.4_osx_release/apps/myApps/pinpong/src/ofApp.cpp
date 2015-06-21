@@ -6,7 +6,13 @@ void ofApp::setup() {
     ofSetFrameRate(60);
     ofSetVerticalSync(true);
     ofEnableSmoothing();
-    
+
+    // Set up camera
+    vidGrabber.setVerbose(true);
+    vidGrabber.initGrabber(320, 240);
+
+    cameraImg.allocate(320, 240);
+    showCamera = true;
     
     int x = (ofGetWidth() - IMAGE_WIDTH) * 0.5;       // center on screen.
     int y = (ofGetHeight() - IMAGE_HEIGHT) * 0.5;     // center on screen.
@@ -41,6 +47,11 @@ void ofApp::update()
     }
     
     ball.move(t);
+
+    vidGrabber.update();
+    if (vidGrabber.isFrameNew()) {
+        cameraImg.setFromPixels(vidGrabber.getPixels(), 320, 240);
+    }
     
 }
 
@@ -60,8 +71,15 @@ void ofApp::draw() {
     ofFill();
     ofRect(table);
     glPopMatrix();
-    
-    
+
+
+    //========================
+    if (showCamera) {
+        cameraFbo.begin();
+        cameraImg.draw(0, 0);
+        cameraFbo.end();
+        cameraFbo.draw(0, 0);
+    }
     //======================== use the matrix to transform points.
 
     ofSetLineWidth(2);
@@ -112,6 +130,11 @@ void ofApp::keyPressed(int key) {
     if(key == 's' || key == 'S') {
         warper.toggleShow();
     }
+
+    if(key == 'c' || key == 'C') {
+        showCamera = !showCamera;
+    }
+
     
     if(key == 'l' || key == 'L') {
         warper.load();
