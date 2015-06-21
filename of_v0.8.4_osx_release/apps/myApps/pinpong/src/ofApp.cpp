@@ -11,7 +11,8 @@ void ofApp::setup() {
     vidGrabber.setVerbose(true);
     vidGrabber.initGrabber(320, 240);
 
-    cameraImg.allocate(320, 240);
+    currentCameraImage.allocate(320, 240);
+    imageDiff.allocate(320, 240);
     showCamera = false;
 
     int x = (ofGetWidth() - table.TABLE_WIDTH) * 0.5;       // center on screen.
@@ -26,6 +27,9 @@ void ofApp::setup() {
     warper.setBottomRightCornerPosition(ofPoint(x + w, y + h)); // this is position of the quad warp corners, centering the image on the screen.
     warper.setup();
     warper.load(); // reload last saved changes.
+    
+    isToGetBaseImage = true;
+    threshold = 230;
 }
 
 //--------------------------------------------------------------
@@ -40,10 +44,29 @@ void ofApp::update()
     
     vidGrabber.update();
     if (vidGrabber.isFrameNew()) {
-        cameraImg.setFromPixels(vidGrabber.getPixels(), 320, 240);
+        ofxCvColorImage cameraImageTmp;
+        cameraImageTmp.setFromPixels(vidGrabber.getPixels(), 320, 240);
+        currentCameraImage = cameraImageTmp;
     }
     
+    if (isToGetBaseImage) {
+        baseImage = currentCameraImage;
+        isToGetBaseImage = false;
+    } else {
+        bool* changes = getImageChanges();
+    }
 }
+
+bool* ofApp::getImageChanges() {
+    static bool result[] = {false, true, false, false};
+    
+    // take the abs value of the difference between background and incoming and then threshold:
+    imageDiff.absDiff(baseImage, currentCameraImage);
+    imageDiff.threshold(threshold);
+    
+    return result;
+}
+
 
 //--------------------------------------------------------------
 void ofApp::draw() {
@@ -64,7 +87,8 @@ void ofApp::draw() {
     //========================
     if (showCamera) {
         cameraFbo.begin();
-        cameraImg.draw(0, 0);
+        //currentCameraImage.draw(0, 0);
+        imageDiff.draw(0, 0);
         cameraFbo.end();
         cameraFbo.draw(0, 0);
     }
