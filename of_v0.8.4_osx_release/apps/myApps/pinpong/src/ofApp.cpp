@@ -134,6 +134,10 @@ void ofApp::keyPressed(int key) {
     if (key == '/' || key == '?') {
         showHelp = !showHelp;
     }
+
+    if (key == ' ') {
+        table.init();
+    }
     
 //    if (key == OF_KEY_LEFT) {
 //        ball.velocity.x += -10;

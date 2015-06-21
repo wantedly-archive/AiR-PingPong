@@ -22,6 +22,7 @@ public:
     const int TABLE_HEIGHT = 152;  // 1.525m
 
     Table();
+    void init();
     void update();
     void draw();
     void swingRacket(int direction);

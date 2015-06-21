@@ -15,6 +15,11 @@ Table::Table(): ball(Ball(ofPoint(0, 0, 0))) {
 
 }
 
+void Table::init() {
+    ball.position = ofPoint(0, 0, 0);
+    ball.velocity = ofVec3f(5, 1, 0);
+}
+
 void Table::draw() {
     // draw self
     ofSetColor(ofColor::white);
