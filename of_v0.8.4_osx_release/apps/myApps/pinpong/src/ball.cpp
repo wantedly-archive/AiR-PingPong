@@ -30,6 +30,6 @@ void Ball::draw(const ofMatrix4x4& mat) {
 }
 
 void Ball::move(int t) {
-    position.x = 1/2 * acceleration.x * t * t + velocity.x * t;
-    position.y = 1/2 * acceleration.y * t * t + velocity.y * t;
+    position.x += acceleration.x * t + velocity.x;
+    position.y += acceleration.y * t + velocity.y;
 }

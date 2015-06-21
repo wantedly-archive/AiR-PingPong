@@ -143,6 +143,18 @@ void ofApp::keyPressed(int key) {
     if(key == 'h' || key == 'H') {
         warper.save();
     }
+    
+    if (key == OF_KEY_LEFT) {
+        ball.velocity.x += -10;
+    } else if (key == OF_KEY_RIGHT) {
+        ball.velocity.x += 10;
+    }
+    
+    if (key == OF_KEY_UP) {
+        ball.velocity.y += -10;
+    } else if (key == OF_KEY_DOWN) {
+        ball.velocity.y += 10;
+    }
 }
 
 //--------------------------------------------------------------
