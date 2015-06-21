@@ -15,9 +15,12 @@ Wantedlyの卓球台をARでハックするプロジェクト
 1. プロジェクトジェネレータを開く`open of_v0.8.4_osx_release/projectGenerator_osx/projectGenerator.app`
 2. プロジェクトの名前とPath(`myApps`以下推奨)を選ぶ
 3. ofxOpenCv, ofxMSAInteractiveObject, ofxQuadWrapを選ぶ
+4. `GENERETE PROJECT`ボタンを押す
 
 moguraを作った時の例:
 ![moguraを作った時の例](/doc/img/ProjectGenerator.png)
+
+後は、`ofApp.cpp`, `ofApp.h`, `main.cpp`のどれかからいじっていくと良い
 
 ## Chat
 
