@@ -104,21 +104,29 @@ void ofApp::exit() {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
 
-    if(key == 's' || key == 'S') {
+    if (key == 's' || key == 'S') {
         warper.toggleShow();
     }
 
-    if(key == 'c' || key == 'C') {
+    if (key == 'c' || key == 'C') {
         showCamera = !showCamera;
     }
 
     
-    if(key == 'l' || key == 'L') {
+    if (key == 'l' || key == 'L') {
         warper.load();
     }
     
-    if(key == 'h' || key == 'H') {
+    if (key == 'h' || key == 'H') {
         warper.save();
+    }
+
+    if (key == 'f' || key == 'F') {
+        table.swingRacket(+1);
+    }
+
+    if (key == 'j' || key == 'J') {
+        table.swingRacket(-1);
     }
     
 //    if (key == OF_KEY_LEFT) {

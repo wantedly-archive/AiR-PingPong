@@ -10,8 +10,9 @@
 #include "ofApp.h"
 
 
-Ball::Ball(ofPoint position): position(position) {
-    
+Ball::Ball(ofPoint position):
+    position(position),
+    velocity(ofVec3f(3, 0, 0)) {
 }
 
 void Ball::draw() {

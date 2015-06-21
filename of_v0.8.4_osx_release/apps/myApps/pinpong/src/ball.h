@@ -13,12 +13,11 @@
 #include "ofVec3f.h"
 
 class Ball {
-private:
+public:
     ofVec3f velocity;
     ofVec3f acceleration;
     ofPoint position;
-    
-public:
+
     Ball(ofPoint position);
     void draw();
     void move(int t);

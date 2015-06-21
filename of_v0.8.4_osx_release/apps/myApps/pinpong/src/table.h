@@ -24,6 +24,7 @@ public:
     Table();
     void update();
     void draw();
+    void swingRacket(int direction);
 };
 
 

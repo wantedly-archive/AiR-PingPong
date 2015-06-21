@@ -28,3 +28,9 @@ void Table::draw() {
 void Table::update() {
     ball.move(1);
 }
+
+void Table::swingRacket(int direction) {
+    if (ball.velocity.x * direction < 0) {
+        ball.velocity.x *= -1;
+    }
+}
