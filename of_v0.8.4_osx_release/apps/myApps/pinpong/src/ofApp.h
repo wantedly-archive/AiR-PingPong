@@ -28,8 +28,16 @@ public:
     Table table;
 
     ofVideoGrabber vidGrabber;
-    ofxCvColorImage cameraImg;
+    ofxCvGrayscaleImage currentCameraImage;
     ofFbo cameraFbo;
     bool showCamera;
     bool showHelp;
+
+private:
+    bool* getImageChanges();
+    int t;
+    int threshold;
+    ofxCvGrayscaleImage baseImage;
+    ofxCvGrayscaleImage imageDiff;
+    bool isToGetBaseImage;
 };
