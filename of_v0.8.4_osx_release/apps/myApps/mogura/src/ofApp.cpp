@@ -3,9 +3,9 @@
 using namespace cv;
 using namespace ofxCv;
 
-Vec2f pos(100,100);
+Vec2f pos(500,500);
 Vec2f vec(0,0);
-int radius = 20;
+int radius = 10;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -13,7 +13,8 @@ void ofApp::setup(){
 #ifdef _USE_LIVE_VIDEO
     vidGrabber.setVerbose(true);
     vector<ofVideoDevice> devices = vidGrabber.listDevices();
-    vidGrabber.setDeviceID(devices[devices.size()-1].id);
+//    vidGrabber.setDeviceID(devices[devices.size()-1].id);
+    vidGrabber.setDeviceID(0);
     vidGrabber.initGrabber(320,240);
 #else
     vidPlayer.loadMovie("fingers.mov");
@@ -75,41 +76,37 @@ void ofApp::update(){
             if (x*x+y*y <= radius * radius) {
                 uint32 value = m.at<uint8>((int)pos[1] + y, (int)pos[0] + x);
                 if (value == 255) {
-                    sx += (x>0) ? - radius + x : x + radius;
-                    sy += (y>0) ? - radius + y : y + radius;
+                    sx += (x>0) ? - radius + x : (x<0) ? x + radius : 0;
+                    sy += (y>0) ? - radius + y : (y<0) ? y + radius : 0;
                     m.at<uint8>((int)pos[1] + y, (int)pos[0] + x) = 0;
                 }
             }
         }
     }
-    vec[0] += sx * 0.1;
-    vec[1] += sy * 0.1;
+    vec[0] += sx * 1;
+    vec[1] += sy * 1;
     pos[0] += vec[0] * 0.016;
     pos[1] += vec[1] * 0.016;
     if (pos[0] < radius) {
         pos[0] = radius;
         if (vec[0] < 0) {
-            vec[0] = 0;
-            //            vec[0] = -vec[0];
+            vec[0] = -vec[0];
         }
     } else if (pos[0] > m.cols - radius) {
         pos[0] = m.cols - radius;
         if (vec[0] > 0) {
-            vec[0] = 0;
-            //            vec[0] = -vec[0];
+            vec[0] = -vec[0];
         }
     }
     if (pos[1] < radius) {
         pos[1] = radius;
         if (vec[1] < 0) {
-            vec[1] = 0;
-            //            vec[1] = -vec[1];
+            vec[1] = -vec[1];
         }
     } else if (pos[1] > m.rows - radius) {
         pos[1] = m.rows - radius;
         if (vec[1] > 0) {
-            vec[1] = 0;
-            //            vec[1] = -vec[1];
+            vec[1] = -vec[1];
         }
     }
     
