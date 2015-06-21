@@ -9,6 +9,8 @@ void ofApp::setup() {
 
     // Set up camera
     vidGrabber.setVerbose(true);
+    vector<ofVideoDevice> devices = vidGrabber.listDevices();
+    vidGrabber.setDeviceID(devices[devices.size()-1].id);
     vidGrabber.initGrabber(320, 240);
 
     grayImage.allocate(320, 240);
@@ -32,7 +34,7 @@ void ofApp::setup() {
     warper.load(); // reload last saved changes.
     
     isToGetBaseImage = true;
-    threshold = 230;
+    threshold = 200;
 }
 
 //--------------------------------------------------------------
@@ -54,7 +56,14 @@ void ofApp::update()
     if (isToGetBaseImage) {
         baseImage = grayImage;
         isToGetBaseImage = false;
+    } else {
+        imageDiff.absDiff(baseImage, grayImage);
+        imageDiff.threshold(threshold);
+        smallImageDiff.scaleIntoMe(imageDiff);
+        smallImageDiff.blur(5);
     }
+
+    vf.setFromPixels(smallImageDiff.getPixels(), false, 0.05f);
 }
 
 //--------------------------------------------------------------
@@ -76,7 +85,9 @@ void ofApp::draw() {
     //========================
     if (showCamera) {
         cameraFbo.begin();
-        imageDiff.draw(0, 0);
+        colorImage.draw(0, 0);
+        ofSetColor(255, 255, 255, 127);
+        vf.draw();
         cameraFbo.end();
         cameraFbo.draw(0, 0);
     }
