@@ -31,4 +31,5 @@ public:
     ofxCvColorImage cameraImg;
     ofFbo cameraFbo;
     bool showCamera;
+    bool showHelp;
 };
