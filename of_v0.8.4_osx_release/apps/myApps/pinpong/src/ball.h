@@ -9,16 +9,23 @@
 #ifndef pinpong_ball_h
 #define pinpong_ball_h
 
-#include "ofxQuadWarp.h"
+#include "ofPoint.h"
+#include "ofVec3f.h"
+
+class Table;
 
 class Ball {
+private:
+    const Table& table;
 public:
-    Ball(ofPoint position);
     ofVec3f velocity;
     ofVec3f acceleration;
     ofPoint position;
+
+    const int BALL_R = 2; // 40m or 4.4m
+
+    Ball(const Table& table);
     void draw();
-    void draw(const ofMatrix4x4& mat);
     void move(int t);
 };
 

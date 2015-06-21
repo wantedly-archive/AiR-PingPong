@@ -2,11 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxQuadWarp.h"
-#include "ball.h"
-
-#define IMAGE_WIDTH 500
-#define IMAGE_HEIGHT 300
-
+#include "table.h"
 
 class ofApp : public ofBaseApp {
     
@@ -29,17 +25,11 @@ public:
 
     ofxQuadWarp warper;
     
-    ofRectangle table;
-    
-    Ball ball = Ball(ofPoint(0, 0, 0));
-
-    ofPoint points[10];
+    Table table;
 
     ofVideoGrabber vidGrabber;
     ofxCvColorImage cameraImg;
     ofFbo cameraFbo;
     bool showCamera;
-
-private:
-    int t;
+    bool showHelp;
 };
