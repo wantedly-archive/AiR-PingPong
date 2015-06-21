@@ -12,13 +12,13 @@
 
 Ball::Ball(ofPoint position):
     position(position),
-    velocity(ofVec3f(3, 0, 0)) {
+    velocity(ofVec3f(5, 1, 0)) {
 }
 
 void Ball::draw() {
     ofSetColor(244, 103, 0);
     ofFill();
-    ofCircle(position.x, position.y, 10);
+    ofCircle(position.x, position.y, BALL_R);
     ofSetColor(ofColor::white);
 }
 

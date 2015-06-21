@@ -18,6 +18,8 @@ public:
     ofVec3f acceleration;
     ofPoint position;
 
+    const int BALL_R = 2; // 40m or 4.4m
+
     Ball(ofPoint position);
     void draw();
     void move(int t);
