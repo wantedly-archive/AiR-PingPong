@@ -10,7 +10,16 @@ Wantedlyの卓球台をARでハックするプロジェクト
 
 簡単のため、リポジトリ内に[Open Frameworks](http://openframeworks.jp/)は全てすでに取り込んであるのでダウンロードしなくて大丈夫です。
 
-## チャット
+## How to add new project
+
+1. プロジェクトジェネレータを開く`open of_v0.8.4_osx_release/projectGenerator_osx/projectGenerator.app`
+2. プロジェクトの名前とPath(`myApps`以下推奨)を選ぶ
+3. ofxOpenCv, ofxMSAInteractiveObject, ofxQuadWrapを選ぶ
+
+moguraを作った時の例:
+![moguraを作った時の例](/doc/img/ProjectGenerator.png)
+
+## Chat
 
 リアルタイムコミュニケーションは以下のGitterを使っています。
 
