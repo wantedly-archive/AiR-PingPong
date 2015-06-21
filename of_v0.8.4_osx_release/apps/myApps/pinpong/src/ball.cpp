@@ -21,13 +21,6 @@ void Ball::draw() {
     ofSetColor(ofColor::white);
 }
 
-void Ball::draw(const ofMatrix4x4& mat) {
-    ofSetColor(244, 103, 0);
-    ofFill();
-    ofVec3f p = mat.preMult(ofVec3f(position.x, position.y, 0));
-    ofCircle(p.x, p.y, 10);
-}
-
 void Ball::move(int t) {
     position.x += t * velocity.x;
     position.y += t * velocity.y;
