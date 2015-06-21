@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxQuadWarp.h"
 #include "table.h"
+#include "vectorField.h"
 
 class ofApp : public ofBaseApp {
     
@@ -28,16 +29,19 @@ public:
     Table table;
 
     ofVideoGrabber vidGrabber;
-    ofxCvGrayscaleImage currentCameraImage;
+
+    ofxCvColorImage colorImage;
+    ofxCvGrayscaleImage grayImage;
     ofFbo cameraFbo;
     bool showCamera;
     bool showHelp;
 
 private:
-    bool* getImageChanges();
     int t;
     int threshold;
     ofxCvGrayscaleImage baseImage;
     ofxCvGrayscaleImage imageDiff;
+    ofxCvGrayscaleImage smallImageDiff;
+    vectorField vf;
     bool isToGetBaseImage;
 };

@@ -11,8 +11,11 @@ void ofApp::setup() {
     vidGrabber.setVerbose(true);
     vidGrabber.initGrabber(320, 240);
 
-    currentCameraImage.allocate(320, 240);
+    grayImage.allocate(320, 240);
     imageDiff.allocate(320, 240);
+    smallImageDiff.allocate(60, 40);
+    vf.setupField(60, 40, 360, 240);
+    
     showCamera = false;
 
     int x = (ofGetWidth() - table.TABLE_WIDTH) * 0.5;       // center on screen.
@@ -43,30 +46,16 @@ void ofApp::update()
     table.update();
     
     vidGrabber.update();
-    if (vidGrabber.isFrameNew()) {
-        ofxCvColorImage cameraImageTmp;
-        cameraImageTmp.setFromPixels(vidGrabber.getPixels(), 320, 240);
-        currentCameraImage = cameraImageTmp;
+    if (vidGrabber.isFrameNew()) {  // if camera image is updated
+        colorImage.setFromPixels(vidGrabber.getPixels(), 320, 240);
+        grayImage = colorImage;  // convert to gray scale
     }
     
     if (isToGetBaseImage) {
-        baseImage = currentCameraImage;
+        baseImage = grayImage;
         isToGetBaseImage = false;
-    } else {
-        bool* changes = getImageChanges();
     }
 }
-
-bool* ofApp::getImageChanges() {
-    static bool result[] = {false, true, false, false};
-    
-    // take the abs value of the difference between background and incoming and then threshold:
-    imageDiff.absDiff(baseImage, currentCameraImage);
-    imageDiff.threshold(threshold);
-    
-    return result;
-}
-
 
 //--------------------------------------------------------------
 void ofApp::draw() {
@@ -87,16 +76,10 @@ void ofApp::draw() {
     //========================
     if (showCamera) {
         cameraFbo.begin();
-        //currentCameraImage.draw(0, 0);
         imageDiff.draw(0, 0);
         cameraFbo.end();
         cameraFbo.draw(0, 0);
     }
-    //======================== use the matrix to transform points.
-
-//    ofSetLineWidth(2);
-//    ofSetColor(ofColor::cyan);
-
     
     //======================== draw quad warp ui.
     
