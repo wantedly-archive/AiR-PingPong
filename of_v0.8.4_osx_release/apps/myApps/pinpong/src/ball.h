@@ -12,11 +12,13 @@
 #include "ofxQuadWarp.h"
 
 class Ball {
-public:
-    Ball(ofPoint position);
+private:
     ofVec3f velocity;
     ofVec3f acceleration;
     ofPoint position;
+    
+public:
+    Ball(ofPoint position);
     void draw();
     void draw(const ofMatrix4x4& mat);
     void move(int t);
