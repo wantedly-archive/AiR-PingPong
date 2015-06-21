@@ -1,7 +1,9 @@
 #pragma once
 
+#include <vector>
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "wiiplayer.h"
 
 #define PORT 9000
 
@@ -23,7 +25,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
         int w, h;
-        float roll, yaw, pitch, accel, wiiX, wiiY;
         ofxOscReceiver receiver;
+    
+        std::vector<Player> players;
 		
 };

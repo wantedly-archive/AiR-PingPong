@@ -13,6 +13,9 @@ void ofApp::setup(){
     w = 0;
     h = 0;    // set in update()
     
+    players.push_back(Player(1));
+    players.push_back(Player(2));
+    
     // listen on the given port
     cout << "listening for osc messages on port " << PORT << "\n";
     receiver.setup( PORT );
@@ -32,50 +35,34 @@ void ofApp::update(){
         float x,y;
         receiver.getNextMessage( &m );
         
-        if ( m.getAddress() == "/wii/2/ir/0" )
-        {
-            x = m.getArgAsFloat( 0 );
-            wiiX = x * w;
-            cout << "x: " << wiiX << " y: " << wiiY << "\n";
-        }
-        else if ( m.getAddress() == "/wii/2/ir/1" )
-        {
-            y = 1 - m.getArgAsFloat( 0 );
-            wiiY = y * h;
-            cout << "x: " << wiiX << " y: " << wiiY << "\n";
-        }
-        else if (m.getAddress() == "/wii/1/accel/pry/1") {
-            roll = m.getArgAsFloat(0);
-            
-        } else if (m.getAddress() == "/wii/1/accel/pry/2") {
-            yaw = m.getArgAsFloat(0);
-        }
-        else if (m.getAddress() == "/wii/1/accel/pry/0") {
-            pitch = m.getArgAsFloat(0);
-            
-        } else if (m.getAddress() == "/wii/1/accel/pry/3") {
-            accel = m.getArgAsFloat(0);
-        }
-        else
-        {
-            cout << "unrecognized message: " << m.getAddress() << "\n";
-        }
+        Player player1 = players[0];
+        Player player2 = players[1];
+        player1.setParams(m);
+        player2.setParams(m);
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     if ((ofGetFrameNum() % 100) == 0) {
+        Player player1 = players[0];
+        Player player2 = players[1];
+        WiiParams player1P = player1.getParams();
+        WiiParams player2P = player2.getParams();
+        printf("Player1");
         printf("roll = %f, pitch = %f, yaw = %f, accel = %f\n",
-               roll,pitch,yaw,accel);
+               player1P.roll,player1P.pitch,player1P.yaw,player1P.accel);
+        printf("Player2");
+        printf("roll = %f, pitch = %f, yaw = %f, accel = %f\n",
+               player1P.roll,player1P.pitch,player1P.yaw,player1P.accel);
     }
     
     ofSetColor(255, 130, 0);
     //float radius = 50;
     ofFill();
     //ofCircle(wiiX, wiiY, radius);
-    ofCircle(roll *= ofGetWidth(), yaw *= ofGetHeight(),100);
-    ofCircle(accel *= ofGetWidth(), pitch *= ofGetWidth(), 50);
+    //ofCircle(roll *= ofGetWidth(), yaw *= ofGetHeight(),100);
+    //ofCircle(accel *= ofGetWidth(), pitch *= ofGetWidth(), 50);
 }
 
 //--------------------------------------------------------------
